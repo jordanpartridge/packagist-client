@@ -3,8 +3,8 @@
 namespace JordanPartridge\Packagist\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use JordanPartridge\Packagist\PackagistServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

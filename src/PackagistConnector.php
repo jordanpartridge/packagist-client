@@ -9,7 +9,6 @@ class PackagistConnector extends Connector
 {
     use AlwaysThrowOnErrors;
 
-
     protected function defaultHeaders(): array
     {
         return [
@@ -18,11 +17,8 @@ class PackagistConnector extends Connector
         ];
     }
 
-    /**
-     * @return string
-     */
     public function resolveBaseUrl(): string
     {
-       return 'https://repo.packagist.org/p2/';
+        return 'https://repo.packagist.org/p2/';
     }
 }

@@ -9,8 +9,8 @@ it('has proper endpoint', function () {
 });
 
 it('can get this package', function () {
-    $get      = new Get('jordanpartridge', 'packagist-client');
-    $connector = new PackagistConnector();
+    $get = new Get('jordanpartridge', 'packagist-client');
+    $connector = new PackagistConnector;
     $response = $connector->send($get);
     expect($response->json())->toBeArray();
 });

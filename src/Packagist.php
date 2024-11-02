@@ -11,19 +11,14 @@ class Packagist
 {
     public function __construct(
         protected PackagistConnector $connector,
-    )
-    {
-    }
+    ) {}
 
     /**
-     * @param string $vendor
-     * @param string $name
      * @throws FatalRequestException
      * @throws RequestException
-     * @return Response
      */
     public function getPackage(string $vendor, string $name): Response
     {
-       return $this->connector->send(new Get($vendor, $name));
+        return $this->connector->send(new Get($vendor, $name));
     }
 }
