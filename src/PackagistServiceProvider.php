@@ -2,9 +2,9 @@
 
 namespace JordanPartridge\Packagist;
 
+use JordanPartridge\Packagist\Commands\PackagistCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use JordanPartridge\Packagist\Commands\PackagistCommand;
 
 class PackagistServiceProvider extends PackageServiceProvider
 {
