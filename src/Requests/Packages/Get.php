@@ -22,7 +22,7 @@ class Get extends Request
      */
     public function resolveEndpoint(): string
     {
-        return "/{$this->vendor}/$this->package.json";
+        return "/p2/{$this->vendor}/$this->package.json";
     }
 
     private function validateVendorName(string $vendor): void
