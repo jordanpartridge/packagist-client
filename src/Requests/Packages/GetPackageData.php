@@ -2,10 +2,12 @@
 
 namespace JordanPartridge\Packagist\Requests\Packages;
 
+use JordanPartridge\Packagist\Data\PackageDetails;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 
-class Get extends Request
+class GetPackageData extends Request
 {
     protected Method $method = Method::GET;
 
@@ -15,6 +17,11 @@ class Get extends Request
     ) {
         $this->validateRepoName($package);
         $this->validateVendorName($vendor);
+    }
+
+    public function createDtoFromResponse(Response $response): PackageDetails
+    {
+        return PackageDetails::fromArray($response->json());
     }
 
     /**

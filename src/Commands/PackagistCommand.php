@@ -6,14 +6,21 @@ use Illuminate\Console\Command;
 use JordanPartridge\Packagist\Packagist;
 use ReflectionClass;
 use ReflectionMethod;
-use function Laravel\Prompts\{select, text, info, warning, error};
+
+use function Laravel\Prompts\error;
+use function Laravel\Prompts\info;
+use function Laravel\Prompts\select;
+use function Laravel\Prompts\text;
+use function Laravel\Prompts\warning;
 
 class PackagistCommand extends Command
 {
     public $signature = 'packagist-client';
+
     public $description = 'Interactive Packagist client for package management';
 
     protected $packagist;
+
     protected array $availableActions = [];
 
     public function __construct(Packagist $packagist)
@@ -48,6 +55,7 @@ class PackagistCommand extends Command
     {
         // Convert camelCase to Title Case with spaces
         $formatted = preg_replace('/(?<!^)[A-Z]/', ' $0', $name);
+
         return ucfirst($formatted);
     }
 
@@ -60,6 +68,7 @@ class PackagistCommand extends Command
 
             if ($action === 'exit') {
                 info('Thanks for using Packagist Client!');
+
                 return Command::SUCCESS;
             }
 
@@ -85,16 +94,18 @@ class PackagistCommand extends Command
     {
         if ($action === 'help') {
             $this->showHelp();
+
             return;
         }
 
-        if (!method_exists($this->packagist, $action)) {
+        if (! method_exists($this->packagist, $action)) {
             warning("Action '$action' not found.");
+
             return;
         }
 
         $parameters = $this->getMethodParameters($action);
-        $result = $this->packagist->{$action}(...$parameters)->json();
+        $result = $this->packagist->{$action}(...$parameters)->dto();
         $this->displayResult($action, $result);
     }
 
@@ -111,7 +122,7 @@ class PackagistCommand extends Command
             $prompt = ucfirst(str_replace('_', ' ', $paramName));
 
             // Get the parameter value based on type
-            $value = match($type) {
+            $value = match ($type) {
                 'int' => (int) text("Enter $prompt:"),
                 'float' => (float) text("Enter $prompt:"),
                 'bool' => in_array(
@@ -129,10 +140,11 @@ class PackagistCommand extends Command
 
     protected function displayResult(string $action, mixed $result): void
     {
-        dd($result);
+
         if (is_array($result)) {
             if (empty($result)) {
                 warning('No results found.');
+
                 return;
             }
 
@@ -158,6 +170,7 @@ class PackagistCommand extends Command
                 return false;
             }
         }
+
         return true;
     }
 
@@ -225,7 +238,7 @@ class PackagistCommand extends Command
             $parameters = $method->getParameters();
             $paramList = empty($parameters)
                 ? 'No parameters required'
-                : 'Parameters: ' . implode(', ', array_map(fn($p) => $p->getName(), $parameters));
+                : 'Parameters: '.implode(', ', array_map(fn ($p) => $p->getName(), $parameters));
 
             $this->line(sprintf(
                 '• %s: %s',
