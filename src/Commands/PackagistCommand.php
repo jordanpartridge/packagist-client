@@ -7,6 +7,7 @@ use JordanPartridge\Packagist\Packagist;
 use ReflectionClass;
 use ReflectionMethod;
 
+use Symfony\Component\Console\Command\Command as CommandAlias;
 use function Laravel\Prompts\error;
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\select;
@@ -19,7 +20,7 @@ class PackagistCommand extends Command
 
     public $description = 'Interactive Packagist client for package management';
 
-    protected $packagist;
+    protected Packagist $packagist;
 
     protected array $availableActions = [];
 
@@ -69,7 +70,7 @@ class PackagistCommand extends Command
             if ($action === 'exit') {
                 info('Thanks for using Packagist Client!');
 
-                return Command::SUCCESS;
+                return CommandAlias::SUCCESS;
             }
 
             try {
@@ -78,8 +79,6 @@ class PackagistCommand extends Command
                 error("Error: {$e->getMessage()}");
             }
         }
-
-        return Command::SUCCESS;
     }
 
     protected function getAction(): string
@@ -116,21 +115,14 @@ class PackagistCommand extends Command
 
         foreach ($reflection->getParameters() as $param) {
             $paramName = $param->getName();
-            $type = 'mixed' ?? $param->getType()?->getName();
+            $type = $param->getType() ?? 'mixed';
 
             // Format the prompt based on parameter name
             $prompt = ucfirst(str_replace('_', ' ', $paramName));
 
             // Get the parameter value based on type
-            $value = match ($type) {
-                'int' => (int) text("Enter $prompt:"),
-                'float' => (float) text("Enter $prompt:"),
-                'bool' => in_array(
-                    strtolower(text("Enter $prompt (yes/no):")),
-                    ['yes', 'y', 'true', '1']
-                ),
-                default => text("Enter $prompt:")
-            };
+
+                $value = text("Enter $prompt:");
 
             $parameters[] = $value;
         }

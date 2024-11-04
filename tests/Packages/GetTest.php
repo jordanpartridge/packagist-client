@@ -5,7 +5,7 @@ use JordanPartridge\Packagist\Requests\Packages\GetPackageData;
 
 it('has proper endpoint', function () {
     $get = new GetPackageData('jordanpartridge', 'packagist-client');
-    expect($get->resolveEndpoint())->toBe('/jordanpartridge/packagist-client.json');
+    expect($get->resolveEndpoint())->toBe('/p2/jordanpartridge/packagist-client.json');
 });
 
 it('can get this package', function () {
