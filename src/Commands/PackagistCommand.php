@@ -7,8 +7,8 @@ use JordanPartridge\Packagist\Contracts\DataTransferObjectInterface;
 use JordanPartridge\Packagist\Packagist;
 use ReflectionClass;
 use ReflectionMethod;
-
 use Symfony\Component\Console\Command\Command as CommandAlias;
+
 use function Laravel\Prompts\error;
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\select;
@@ -123,7 +123,7 @@ class PackagistCommand extends Command
 
             // Get the parameter value based on type
 
-                $value = text("Enter $prompt:");
+            $value = text("Enter $prompt:");
 
             $parameters[] = $value;
         }
@@ -134,23 +134,23 @@ class PackagistCommand extends Command
     protected function displayResult(string $action, DataTransferObjectInterface $result): void
     {
 
-       $actionName = $action;
+        $actionName = $action;
         $this->info("Result for $actionName:");
         //show a menu of possible actions on the result
-       $methods = get_class_methods($result);
+        $methods = get_class_methods($result);
         $menu = [];
         $methods = collect($methods)->reject(function ($method) {
-            return in_array($method, ['toJson', 'fromJson','toArray', 'fromArray', '__construct']);
+            return in_array($method, ['toJson', 'fromJson', 'toArray', 'fromArray', '__construct']);
         });
 
         foreach ($methods as $method) {
-                $menu[] = $method;
+            $menu[] = $method;
 
         }
 
         //display menu with prompts
         $selectedAction = select('What would you like to do?', $menu);
-        $output =   $result->{$selectedAction}();
+        $output = $result->{$selectedAction}();
         dd($output);
     }
 

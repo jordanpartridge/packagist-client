@@ -2,13 +2,13 @@
 
 namespace JordanPartridge\Packagist\Data;
 
+use Composer\MetadataMinifier\MetadataMinifier;
 use Exception;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
-use RuntimeException;
-use JsonException;
-use Composer\MetadataMinifier\MetadataMinifier;
 use JordanPartridge\Packagist\Contracts\DataTransferObjectInterface;
+use JsonException;
+use RuntimeException;
 
 /**
  * Represents detailed package information from Packagist
@@ -16,6 +16,7 @@ use JordanPartridge\Packagist\Contracts\DataTransferObjectInterface;
 readonly class PackageDetails implements DataTransferObjectInterface
 {
     private Collection $processedPackages;
+
     private Collection $processedAdvisories;
 
     public function __construct(
@@ -78,7 +79,7 @@ readonly class PackageDetails implements DataTransferObjectInterface
     {
         $package = $this->processedPackages->get($name);
 
-        if (!$package) {
+        if (! $package) {
             throw new Exception("Package not found: {$name}");
         }
 
@@ -102,7 +103,7 @@ readonly class PackageDetails implements DataTransferObjectInterface
     public function expanded(): array
     {
         try {
-            if (!isset($this->packages)) {
+            if (! isset($this->packages)) {
                 throw new Exception('Invalid package data structure');
             }
 
@@ -142,21 +143,21 @@ readonly class PackageDetails implements DataTransferObjectInterface
 
         // Validate required keys
         foreach ($requiredKeys as $key) {
-            if (!array_key_exists($key, $data)) {
+            if (! array_key_exists($key, $data)) {
                 throw new InvalidArgumentException("Missing required key: {$key}");
             }
         }
 
         // Validate data types
-        if (!is_string($data['minified'])) {
+        if (! is_string($data['minified'])) {
             throw new InvalidArgumentException('Minified value must be a string');
         }
 
-        if (!is_array($data['packages'])) {
+        if (! is_array($data['packages'])) {
             throw new InvalidArgumentException('Packages must be an array');
         }
 
-        if (!is_array($data['security-advisories'])) {
+        if (! is_array($data['security-advisories'])) {
             throw new InvalidArgumentException('Security advisories must be an array');
         }
 
@@ -178,6 +179,7 @@ readonly class PackageDetails implements DataTransferObjectInterface
     {
         try {
             $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
             return self::fromArray($data);
         } catch (JsonException $e) {
             throw new JsonException("Invalid JSON format: {$e->getMessage()}");

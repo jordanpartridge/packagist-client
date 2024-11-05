@@ -3,7 +3,6 @@
 namespace JordanPartridge\Packagist\Requests\Packages;
 
 use JordanPartridge\Packagist\Data\PackageDetails;
-use JsonException;
 use RuntimeException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -16,8 +15,7 @@ class GetPackageData extends Request
     public function __construct(
         protected string $vendor,
         protected string $package,
-    )
-    {
+    ) {
         $this->validateRepoName($package);
         $this->validateVendorName($vendor);
     }
@@ -26,7 +24,7 @@ class GetPackageData extends Request
     {
         $data = $response->json();
 
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             throw new RuntimeException('Invalid JSON response received');
         }
 
@@ -43,14 +41,14 @@ class GetPackageData extends Request
 
     private function validateVendorName(string $vendor): void
     {
-        if (!preg_match('/^[a-z0-9]([_.-]?[a-z0-9]+)*/i', $vendor)) {
+        if (! preg_match('/^[a-z0-9]([_.-]?[a-z0-9]+)*/i', $vendor)) {
             throw new \InvalidArgumentException('Invalid vendor name');
         }
     }
 
     private function validateRepoName(string $package): void
     {
-        if (!preg_match('/^[a-z0-9]([_.-]?[a-z0-9]+)*/i', $package)) {
+        if (! preg_match('/^[a-z0-9]([_.-]?[a-z0-9]+)*/i', $package)) {
             throw new \InvalidArgumentException('Invalid package name');
         }
     }
