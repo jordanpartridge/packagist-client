@@ -3,6 +3,7 @@
 namespace JordanPartridge\Packagist\Commands;
 
 use Illuminate\Console\Command;
+use JordanPartridge\Packagist\Contracts\DataTransferObjectInterface;
 use JordanPartridge\Packagist\Packagist;
 use ReflectionClass;
 use ReflectionMethod;
@@ -130,29 +131,27 @@ class PackagistCommand extends Command
         return $parameters;
     }
 
-    protected function displayResult(string $action, mixed $result): void
+    protected function displayResult(string $action, DataTransferObjectInterface $result): void
     {
 
-        if (is_array($result)) {
-            if (empty($result)) {
-                warning('No results found.');
+       $actionName = $action;
+        $this->info("Result for $actionName:");
+        //show a menu of possible actions on the result
+       $methods = get_class_methods($result);
+        $menu = [];
+        $methods = collect($methods)->reject(function ($method) {
+            return in_array($method, ['toJson', 'fromJson','toArray', 'fromArray', '__construct']);
+        });
 
-                return;
-            }
+        foreach ($methods as $method) {
+                $menu[] = $method;
 
-            // Determine if it's a single item or a list
-            $isSingleItem = $this->isSingleDimensionalArray($result);
-
-            if ($isSingleItem) {
-                $this->displaySingleItem($result);
-            } else {
-                $this->displayList($result);
-            }
-        } elseif (is_object($result)) {
-            $this->displaySingleItem((array) $result);
-        } else {
-            $this->line($result);
         }
+
+        //display menu with prompts
+        $selectedAction = select('What would you like to do?', $menu);
+        $output =   $result->{$selectedAction}();
+        dd($output);
     }
 
     protected function isSingleDimensionalArray(array $array): bool
