@@ -19,6 +19,6 @@ class PackagistConnector extends Connector
 
     public function resolveBaseUrl(): string
     {
-        return 'https://repo.packagist.org/p2/';
+        return 'https://repo.packagist.org/';
     }
 }
