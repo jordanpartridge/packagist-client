@@ -2,19 +2,33 @@
 
 namespace JordanPartridge\Packagist\Requests\Packages;
 
+use JordanPartridge\Packagist\Data\PackageDetails;
+use RuntimeException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 
-class Get extends Request
+class GetPackageData extends Request
 {
     protected Method $method = Method::GET;
 
     public function __construct(
         protected string $vendor,
-        protected string $package
+        protected string $package,
     ) {
         $this->validateRepoName($package);
         $this->validateVendorName($vendor);
+    }
+
+    public function createDtoFromResponse(Response $response): PackageDetails
+    {
+        $data = $response->json();
+
+        if (! is_array($data)) {
+            throw new RuntimeException('Invalid JSON response received');
+        }
+
+        return PackageDetails::fromArray($data);
     }
 
     /**
@@ -22,7 +36,7 @@ class Get extends Request
      */
     public function resolveEndpoint(): string
     {
-        return "/{$this->vendor}/$this->package.json";
+        return "/p2/{$this->vendor}/$this->package.json";
     }
 
     private function validateVendorName(string $vendor): void
