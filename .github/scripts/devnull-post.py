@@ -17,8 +17,12 @@ import sys
 
 LIMIT = 4000
 MAX_NOTES = 10
-# Fixed machine-readable footer. url is the release link, or the commit link when there is no release url.
-FOOTER = "repo: {repo}\nversion: {version}\nsha: {sha}\nurl: {url}"
+# Fixed machine-readable footer:
+# repo: {repo}
+# version: {version}
+# commit: {commit}
+# url: {release URL, or https://github.com/{repo}/commit/{commit}}
+FOOTER = "repo: {repo}\nversion: {version}\ncommit: {commit}\nurl: {url}"
 REPO = os.environ["REPO"]
 TAG = os.environ["TAG"]
 BODY = os.environ.get("RELEASE_BODY", "") or ""
@@ -311,7 +315,7 @@ def main():
                 local_pipeline(sha, prs) if sha else ("Local pipeline:", [])]
     head = f"{NAME} {TAG}: {clean(PITCH, 400)}" if PITCH else f"{NAME} {TAG}"
     link = URL or (f"https://github.com/{REPO}/commit/{sha}" if sha else "")
-    footer = FOOTER.format(repo=REPO, version=TAG, sha=sha or "", url=link)
+    footer = FOOTER.format(repo=REPO, version=TAG, commit=sha or "", url=link)
     require = f"composer require {PACKAGE}" if PACKAGE else ""
     tail = "\n\n".join(x for x in (require, footer) if x)
     # trim lowest priority first: changed in review, local pipeline, reviews, AC, tests, patch notes
