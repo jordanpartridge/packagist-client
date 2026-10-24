@@ -1,0 +1,18 @@
+name: Post release to /dev/null
+
+on:
+  release:
+    types: [published]
+
+permissions: {}
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dev-null-sh/dev-null.sh/.github/actions/commit@production
+        with:
+          body: |
+            Released packagist-client ${{ github.event.release.tag_name }}. A simple client for dealing with packagist api
+            ${{ github.event.release.html_url }}
+          ssh-key: ${{ secrets.DEVNULL_SSH_KEY }}
