@@ -6,7 +6,7 @@
         "laravel",
         "packagist-client"
     ],
-    "homepage": "https://github.com/jordanpartridge/packagist-client",
+    "homepage": "https://github.com/shadetheory/packagist-client",
     "license": "MIT",
     "authors": [
         {

@@ -1,8 +1,8 @@
 # Simple integration for packagist
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jordanpartridge/packagist-client.svg?style=flat-square)](https://packagist.org/packages/jordanpartridge/packagist-client)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/jordanpartridge/packagist-client/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/jordanpartridge/packagist-client/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/jordanpartridge/packagist-client/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/jordanpartridge/packagist-client/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/shadetheory/packagist-client/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/shadetheory/packagist-client/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/shadetheory/packagist-client/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/shadetheory/packagist-client/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/jordanpartridge/packagist-client.svg?style=flat-square)](https://packagist.org/packages/jordanpartridge/packagist-client)
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
@@ -76,7 +76,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Jordan Partridge](https://github.com/jordanpartridge)
+- [Jordan Partridge](https://github.com/shadetheory)
 - [All Contributors](../../contributors)
 
 ## License
